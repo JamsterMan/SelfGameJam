@@ -1,3 +1,3 @@
 # SelfGameJam
-48 hour self game jam
+48 hour self game jam.
 Theme : 
