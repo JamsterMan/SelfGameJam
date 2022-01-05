@@ -17,6 +17,7 @@ public class PlayerMovement : MonoBehaviour
     public float checkRadius;
     public LayerMask whatIsGround;
     public LayerMask whatIsGround2;
+    public FlashLight fl;
 
 
     private float moveInput;
@@ -49,6 +50,8 @@ public class PlayerMovement : MonoBehaviour
         //move player here
         Move(moveInput * Time.fixedDeltaTime, jump);
         jump = false;
+
+        FaceFlashLight();
     }
 
     private void Move(float move, bool jump)
@@ -56,11 +59,11 @@ public class PlayerMovement : MonoBehaviour
         Vector3 velocity = new Vector2(move * 10f, rBody.velocity.y);
         rBody.velocity = velocity;
 
-        if(!facingRight && moveInput > 0) {//moving right but facing left
+        /*if(!facingRight && moveInput > 0) {//moving right but facing left
             Flip();
         }else if (facingRight && moveInput < 0) {//moving left but faceing right
             Flip();
-        }
+        }*/
 
         if(isGrounded && jump) {
             isGrounded = false;
@@ -75,5 +78,15 @@ public class PlayerMovement : MonoBehaviour
         Vector3 Scaler = transform.localScale;
         Scaler.x *= -1;
         transform.localScale = Scaler;
+        fl.FlipFlashLight();
+    }
+
+    private void FaceFlashLight()
+    {
+        if( (fl.GetFlashLightAngle() > 90 || fl.GetFlashLightAngle() < -90) && facingRight) {
+            Flip();
+        }else if ((fl.GetFlashLightAngle() <= 90 || fl.GetFlashLightAngle() >= -90) && !facingRight) {
+            Flip();
+        }
     }
 }

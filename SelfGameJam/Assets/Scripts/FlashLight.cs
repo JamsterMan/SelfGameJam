@@ -5,27 +5,57 @@ using UnityEngine.Tilemaps;
 
 public class FlashLight : MonoBehaviour
 {
-    public int layerLightable = 10;
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        
-        if (collision.gameObject.layer == layerLightable) {
-            Debug.Log("object entered: " + collision.name);
-            //collision.gameObject.GetComponent<TilemapRenderer>().SetActive(true);
+    public LayerMask playerLayer;
+    private Vector3 lastMousePos;
+    private float angle;
+    private float flipAngle;//too keep flash light working when player turns
 
-            collision.gameObject.GetComponent<TilemapRenderer>().enabled = true;
-            collision.gameObject.GetComponent<CompositeCollider2D>().isTrigger = false;
-            Debug.Log(collision.bounds.center);
+    private void Start()
+    {
+        lastMousePos = Vector3.zero;
+        flipAngle = 1;
+    }
+
+    void Update()
+    {
+        //lookDirection = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
+
+        Vector3 mousePos = Input.mousePosition;
+        if (mousePos != lastMousePos) {
+            Vector3 objectPos = Camera.main.WorldToScreenPoint(transform.position);
+            mousePos.x -= objectPos.x;
+            mousePos.y -= objectPos.y;
+
+            angle = Mathf.Atan2(mousePos.y * flipAngle, mousePos.x * flipAngle) * Mathf.Rad2Deg;
+            transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+            lastMousePos = mousePos;
+        }
+
+        if (Input.GetMouseButtonDown(0)) {
+            //FireOrb();
+        }
+        /*if (Input.GetButtonDown("PickUp")) {
+            Debug.Log("button pressed");
+        }*/
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        Debug.Log(collision.name + " : " + collision.IsTouchingLayers(playerLayer));
+        if (collision.IsTouchingLayers(playerLayer)) {
+            if (Input.GetButtonDown("PickUp")) {
+                Debug.Log("button pressed: " + collision.name);
+            }
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    public float GetFlashLightAngle()
     {
-        if (collision.gameObject.layer == layerLightable) {
-            Debug.Log("object exit: " + collision.name);
-            //collision.gameObject.SetActive(false);
-            collision.gameObject.GetComponent<TilemapRenderer>().enabled = false;
-            collision.gameObject.GetComponent<CompositeCollider2D>().isTrigger = true;
-        }
+        return angle;
+    }
+
+    public void FlipFlashLight()
+    {
+        flipAngle *= -1;
     }
 }
