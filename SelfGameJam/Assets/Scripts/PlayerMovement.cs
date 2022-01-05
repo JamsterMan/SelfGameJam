@@ -16,6 +16,7 @@ public class PlayerMovement : MonoBehaviour
     public Transform groundCheck;
     public float checkRadius;
     public LayerMask whatIsGround;
+    public LayerMask whatIsGround2;
 
 
     private float moveInput;
@@ -42,6 +43,8 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, checkRadius, whatIsGround);
+        if(!isGrounded)
+            isGrounded = Physics2D.OverlapCircle(groundCheck.position, checkRadius, whatIsGround2);
 
         //move player here
         Move(moveInput * Time.fixedDeltaTime, jump);
