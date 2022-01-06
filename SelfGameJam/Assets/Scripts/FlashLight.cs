@@ -9,6 +9,8 @@ public class FlashLight : MonoBehaviour
     private Vector3 lastMousePos;
     private float angle;
     private float flipAngle;//too keep flash light working when player turns
+    public bool isHeld;
+    public PlayerMovement playerMovement;
 
     private void Start()
     {
@@ -21,13 +23,16 @@ public class FlashLight : MonoBehaviour
         //lookDirection = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
 
         Vector3 mousePos = Input.mousePosition;
-        if (mousePos != lastMousePos) {
+        if (mousePos != lastMousePos && isHeld) {
             Vector3 objectPos = Camera.main.WorldToScreenPoint(transform.position);
             mousePos.x -= objectPos.x;
             mousePos.y -= objectPos.y;
 
             angle = Mathf.Atan2(mousePos.y * flipAngle, mousePos.x * flipAngle) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+            if (playerMovement.FlipPlayer(angle)) {
+                FlipFlashLight();
+            }
             lastMousePos = mousePos;
         }
 
@@ -37,6 +42,15 @@ public class FlashLight : MonoBehaviour
         /*if (Input.GetButtonDown("PickUp")) {
             Debug.Log("button pressed");
         }*/
+    }
+
+    private void FixedUpdate()
+    {
+        if (isHeld) {
+            if (playerMovement.FlipPlayer(angle)) {
+                FlipFlashLight();
+            }
+        }
     }
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -49,12 +63,12 @@ public class FlashLight : MonoBehaviour
         }
     }
 
-    public float GetFlashLightAngle()
+    /*private float GetFlashLightAngle()
     {
         return angle;
-    }
+    }*/
 
-    public void FlipFlashLight()
+    private void FlipFlashLight()
     {
         flipAngle *= -1;
     }
