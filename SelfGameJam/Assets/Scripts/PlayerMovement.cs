@@ -17,7 +17,7 @@ public class PlayerMovement : MonoBehaviour
     public float checkRadius;
     public LayerMask whatIsGround;
     public LayerMask whatIsGround2;
-    //public FlashLight fl;
+    public FlashLight fl;
 
 
     private float moveInput;
@@ -25,6 +25,7 @@ public class PlayerMovement : MonoBehaviour
     private void Start()
     {
         rBody = GetComponent<Rigidbody2D>();
+        fl = GetComponentInChildren<FlashLight>();
 
         jump = false;
         facingRight = true;
@@ -44,14 +45,14 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, checkRadius, whatIsGround);
-        if(!isGrounded)
+        if (!isGrounded)
             isGrounded = Physics2D.OverlapCircle(groundCheck.position, checkRadius, whatIsGround2);
 
         //move player here
         Move(moveInput * Time.fixedDeltaTime, jump);
         jump = false;
 
-        //FaceFlashLight();
+        FaceFlashLight();
     }
 
     private void Move(float move, bool jump)
@@ -59,11 +60,11 @@ public class PlayerMovement : MonoBehaviour
         Vector3 velocity = new Vector2(move * 10f, rBody.velocity.y);
         rBody.velocity = velocity;
 
-        if(isGrounded && jump) {
+        if (isGrounded && jump) {
             isGrounded = false;
             rBody.AddForce(new Vector2(0, jumpForce));
         }
-        
+
     }
 
     private void Flip()
@@ -72,29 +73,15 @@ public class PlayerMovement : MonoBehaviour
         Vector3 Scaler = transform.localScale;
         Scaler.x *= -1;
         transform.localScale = Scaler;
-        //fl.FlipFlashLight();
+        fl.FlipFlashLight();
     }
 
-    /*private void FaceFlashLight()
+    private void FaceFlashLight()
     {
-        if( (fl.GetFlashLightAngle() > 90 || fl.GetFlashLightAngle() < -90) && facingRight) {
+        if ((fl.GetFlashLightAngle() > 90 || fl.GetFlashLightAngle() < -90) && facingRight) {
             Flip();
-        }else if ((fl.GetFlashLightAngle() <= 90 || fl.GetFlashLightAngle() >= -90) && !facingRight) {
+        } else if ((fl.GetFlashLightAngle() <= 90 && fl.GetFlashLightAngle() >= -90) && !facingRight) {
             Flip();
         }
-    }*/
-
-    public bool FlipPlayer(float lightAngle)
-    {
-        if ((lightAngle > 90 || lightAngle < -90) && facingRight) {
-            Debug.Log("turn left");
-            Flip();
-            return true;
-        } else if ((lightAngle <= 90 || lightAngle >= -90) && !facingRight) {
-            Debug.Log("turn right");
-            Flip();
-            return true;
-        }
-        return false;
     }
 }

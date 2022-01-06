@@ -5,12 +5,11 @@ using UnityEngine;
 public class PlayerItem : MonoBehaviour
 {
     private bool itemHeld;
-    public Item[] item;
 
     // Start is called before the first frame update
     void Start()
     {
-        itemHeld = true;
+        itemHeld = false;
     }
 
     // Update is called once per frame
@@ -18,8 +17,10 @@ public class PlayerItem : MonoBehaviour
     {
         if (Input.GetButtonDown("PickUp") && !itemHeld) {
             Debug.Log("button pressed: item picked up");
+            itemHeld = true;
         }else if(Input.GetButtonDown("PickUp") && itemHeld) {
             Debug.Log("button pressed: item dropped");
+            itemHeld = false;
         }
     }
 }
