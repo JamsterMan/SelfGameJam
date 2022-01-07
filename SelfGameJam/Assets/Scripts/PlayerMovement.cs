@@ -36,7 +36,8 @@ public class PlayerMovement : MonoBehaviour
     {
         moveInput = Input.GetAxisRaw("Horizontal") * runSpeed;
 
-        if (Input.GetButtonDown("Jump")) {
+        if (Input.GetButtonDown("Jump")) 
+        {
             jump = true;
         }
 
@@ -60,7 +61,8 @@ public class PlayerMovement : MonoBehaviour
         Vector3 velocity = new Vector2(move * 10f, rBody.velocity.y);
         rBody.velocity = velocity;
 
-        if (isGrounded && jump) {
+        if (isGrounded && jump)
+        {
             isGrounded = false;
             rBody.AddForce(new Vector2(0, jumpForce));
         }
@@ -78,9 +80,11 @@ public class PlayerMovement : MonoBehaviour
 
     private void FaceFlashLight()
     {
-        if ((fl.GetFlashLightAngle() > 90 || fl.GetFlashLightAngle() < -90) && facingRight) {
+        if ((fl.GetFlashLightAngle() > 90 || fl.GetFlashLightAngle() < -90) && facingRight) 
+        {
             Flip();
-        } else if ((fl.GetFlashLightAngle() <= 90 && fl.GetFlashLightAngle() >= -90) && !facingRight) {
+        } else if ((fl.GetFlashLightAngle() <= 90 && fl.GetFlashLightAngle() >= -90) && !facingRight) 
+        {
             Flip();
         }
     }

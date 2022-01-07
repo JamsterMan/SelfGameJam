@@ -15,10 +15,12 @@ public class PlayerItem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("PickUp") && !itemHeld) {
+        if (Input.GetButtonDown("PickUp") && !itemHeld) 
+        {
             Debug.Log("button pressed: item picked up");
             itemHeld = true;
-        }else if(Input.GetButtonDown("PickUp") && itemHeld) {
+        }else if(Input.GetButtonDown("PickUp") && itemHeld) 
+        {
             Debug.Log("button pressed: item dropped");
             itemHeld = false;
         }
