@@ -8,7 +8,12 @@ public class KeyControl : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        player.PickUpKey();
+        player.PickUpKey(this);
         gameObject.SetActive(false);
+    }
+
+    public void SetKeyVisable()
+    {
+        gameObject.SetActive(true);
     }
 }
