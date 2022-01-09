@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
@@ -8,15 +9,18 @@ public class PlayerController : MonoBehaviour
     private bool hasKey;
     public int numberOfLives;
 
-    public Text numLivesText;
-    public Image hasKeyIcon;
+    public static Text numLivesText;
+    public static Image hasKeyIcon;
 
-    private Vector2 startPosition;
+    /*private*/public Vector3 startPosition;
     private KeyControl keyObject;
 
     // Start is called before the first frame update
     void Start()
     {
+        numLivesText = GameObject.Find("NumberOfLives").GetComponent<Text>();
+        hasKeyIcon = GameObject.Find("HasKeyIcon").GetComponent<Image>();
+
         hasKey = false;
         hasKeyIcon.enabled = false;
 
@@ -50,6 +54,7 @@ public class PlayerController : MonoBehaviour
                 keyObject.SetKeyVisable();
             SetKeyValues(false, null);
         }
+
         if (numberOfLives > 1)
         {
             numberOfLives--;
@@ -73,12 +78,15 @@ public class PlayerController : MonoBehaviour
 
     private void ResetPlayerPosition()
     {
+        Debug.Log("position reset");
         transform.position = startPosition;
     }
 
     private void GameOver()
     {
         Debug.Log("GameOver");
-        //reset to menu or 1st level
+        numberOfLives = 5;
+        numLivesText.text = "" + numberOfLives;
+        SceneManager.LoadScene(0);
     }
 }

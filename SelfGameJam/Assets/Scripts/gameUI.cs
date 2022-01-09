@@ -2,11 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class gameUI : MonoBehaviour
+public class GameUI : MonoBehaviour
 {
+    public static bool uiCreated = false;
     private void Awake()
     {
-        DontDestroyOnLoad(this);
+        if(uiCreated)
+        {
+            Destroy(gameObject);
+        }
+        uiCreated = true;
+        DontDestroyOnLoad(gameObject);
     }
 
 }
