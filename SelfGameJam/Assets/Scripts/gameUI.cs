@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameUI : MonoBehaviour
 {
-    public static bool uiCreated = false;
+    private static bool uiCreated = false;
     private void Awake()
     {
         if(uiCreated)

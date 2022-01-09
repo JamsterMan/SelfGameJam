@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class DoorOpen : MonoBehaviour
 {
-    public PlayerController player;
+    private PlayerController player;
 
+    private void Start()
+    {
+        player = GameObject.Find("Player").GetComponent<PlayerController>();
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Debug.Log("Trigger Entered by: " + collision.name);

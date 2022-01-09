@@ -7,13 +7,25 @@ using UnityEngine.UI;
 public class PlayerController : MonoBehaviour
 {
     private bool hasKey;
-    public int numberOfLives;
+    private int numberOfLives;
+    public int startNumberOfLives;
 
-    public static Text numLivesText;
-    public static Image hasKeyIcon;
+    private static Text numLivesText;
+    private static Image hasKeyIcon;
 
-    /*private*/public Vector3 startPosition;
+    private Vector3 startPosition;
     private KeyControl keyObject;
+
+    private static bool playerCreated = false;
+    private void Awake()
+    {
+        if (playerCreated)
+        {
+            Destroy(gameObject);
+        }
+        playerCreated = true;
+        DontDestroyOnLoad(gameObject);
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -26,6 +38,8 @@ public class PlayerController : MonoBehaviour
 
         startPosition = transform.position;
         keyObject = null;
+
+        numberOfLives = startNumberOfLives;
     }
 
     public bool UsePlayerKey()
@@ -76,16 +90,16 @@ public class PlayerController : MonoBehaviour
         keyObject = key;
     }
 
-    private void ResetPlayerPosition()
+    public void ResetPlayerPosition()
     {
-        Debug.Log("position reset");
         transform.position = startPosition;
     }
 
     private void GameOver()
     {
         Debug.Log("GameOver");
-        numberOfLives = 5;
+        ResetPlayerPosition();
+        numberOfLives = startNumberOfLives;
         numLivesText.text = "" + numberOfLives;
         SceneManager.LoadScene(0);
     }

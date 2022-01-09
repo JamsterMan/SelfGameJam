@@ -17,7 +17,7 @@ public class PlayerMovement : MonoBehaviour
     public float checkRadius;
     public LayerMask whatIsGround;
     public LayerMask whatIsGround2;
-    public FlashLight fl;
+    private FlashLight fl;
 
 
     private float moveInput;

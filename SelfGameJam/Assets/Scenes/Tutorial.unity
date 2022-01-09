@@ -10784,10 +10784,20 @@ PrefabInstance:
       propertyPath: hasKeyIcon
       value: 
       objectReference: {fileID: 1805971633}
+    - target: {fileID: 1592066650594849218, guid: 4fcad414ed5a3cc40a49ec40215d1007,
+        type: 3}
+      propertyPath: startNumberOfLives
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 1592066650594849244, guid: 4fcad414ed5a3cc40a49ec40215d1007,
         type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 1592066650594849244, guid: 4fcad414ed5a3cc40a49ec40215d1007,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4fcad414ed5a3cc40a49ec40215d1007, type: 3}
