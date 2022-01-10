@@ -1,3 +1,3 @@
 # SelfGameJam
-48 hour self game jam.
-Theme : 
+48 hour/week self game jam.
+Theme : endless night
