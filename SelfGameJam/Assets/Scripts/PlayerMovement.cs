@@ -41,6 +41,12 @@ public class PlayerMovement : MonoBehaviour
             jump = true;
         }
 
+        if (Input.GetButtonDown("Cancel"))
+        {
+            Debug.Log("Quit Game");
+            Application.Quit();
+        }
+
     }
 
     private void FixedUpdate()
